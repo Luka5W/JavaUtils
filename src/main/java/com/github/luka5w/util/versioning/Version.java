@@ -76,27 +76,41 @@ public class Version {
     public static Version fromString(String version) {
         String[] version1 = version.split("\\.");
         if (version1.length < 2) throw new IllegalArgumentException("Unknown Version Scheme (err at pos 1)");
-        version1[0] = version1[0].toLowerCase();
-        int i = -1;
-        while (++i < version1[0].length()) {
-            if (!Character.isLetter(version1[0].charAt(i))) break;
-        }
-        if (i == version1[0].length()) throw new IllegalArgumentException("Unknown Version Scheme (err at pos 2)");
-        VersionType type;
+        VersionType type = VersionType.NONE;
         int major;
         int minor;
         int build = -1;
         int revision = -1;
+        if (Character.isDigit(version1[0].charAt(0))) {
+            try {
+                major = Integer.parseInt(version1[0]);
+            }
+            catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Unknown Version Scheme (err at pos 3.1)");
+            }
+        } else {
+            version1[0] = version1[0].toLowerCase();
+            int i = -1;
+            while (++i < version1[0].length()) {
+                if (!Character.isLetter(version1[0].charAt(i))) break;
+            }
+            if (i == version1[0].length()) throw new IllegalArgumentException("Unknown Version Scheme (err at pos 2)");
+            try {
+                type = VersionType.fromString(version1[0].substring(0, i));
+                major = Integer.parseInt(version1[0].substring(i));
+            }
+            catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Unknown Version Scheme (err at pos 3.2)");
+            }
+        }
         try {
-            type = VersionType.fromString(version1[0].substring(0, i));
-            major = Integer.parseInt(version1[0].substring(i));
             minor = Integer.parseInt(version1[1]);
             if (version1.length > 2) build = Integer.parseInt(version1[2]);
             if (version1.length > 3) revision = Integer.parseInt(version1[3]);
             return new Version(type, major, minor, build, revision);
         }
         catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException("Unknown Version Scheme (err at pos 3)");
+            throw new IllegalArgumentException("Unknown Version Scheme (err at pos 4)");
         }
     }
 

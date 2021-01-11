@@ -15,7 +15,8 @@ public enum VersionType {
     BETA("b"),
     PRE("pre"),
     DEV("dev"),
-    FULL("v");
+    FULL("v"),
+    NONE("");
 
     private final String type;
 
@@ -45,6 +46,8 @@ public enum VersionType {
                 return DEV;
             case "v":
                 return FULL;
+            case "":
+                return NONE;
             default:
                 throw new IllegalArgumentException("No enum constant Type." + type);
         }
