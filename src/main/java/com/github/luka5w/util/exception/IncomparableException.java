@@ -3,7 +3,7 @@ package com.github.luka5w.util.exception;
 /**
  * IncomparableException
  *
- * <p>This exception is called when a loop has been iterating too much.</p>
+ * <p>This exception is thrown when two instances can't be compared with each other.</p>
  *
  * GitHub: https://github.com/luka5w/javautils
  *

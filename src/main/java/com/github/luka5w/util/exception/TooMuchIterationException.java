@@ -3,7 +3,7 @@ package com.github.luka5w.util.exception;
 /**
  * TooMuchIterationException
  *
- * <p>This exception is called when a loop has been iterating too much.</p>
+ * <p>This exception is thrown when a loop has been iterating too much.</p>
  *
  * GitHub: https://github.com/luka5w/javautils
  *

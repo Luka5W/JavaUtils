@@ -3,7 +3,7 @@ package com.github.luka5w.util.exception;
 /**
  * PreconditionNotMetException
  *
- * <p>This exception is called when a precondition for a method isn't met.</p>
+ * <p>This exception is thrown when a precondition for a method isn't met.</p>
  *
  * GitHub: https://github.com/luka5w/javautils
  *
