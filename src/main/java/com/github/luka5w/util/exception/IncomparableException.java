@@ -1,7 +1,7 @@
 package com.github.luka5w.util.exception;
 
 /**
- * TooMuchIterationException
+ * IncomparableException
  *
  * <p>This exception is called when a loop has been iterating too much.</p>
  *
@@ -10,24 +10,24 @@ package com.github.luka5w.util.exception;
  * @author Lukas // https://github.com/luka5w
  * @version 1.0.0
  */
-public class TooMuchIterationException extends RuntimeException {
-    public TooMuchIterationException() {
+public class IncomparableException extends Exception {
+    public IncomparableException() {
         super();
     }
 
-    public TooMuchIterationException(String s) {
+    public IncomparableException(String s) {
         super(s);
     }
 
-    public TooMuchIterationException(String s, Throwable throwable) {
+    public IncomparableException(String s, Throwable throwable) {
         super(s, throwable);
     }
 
-    public TooMuchIterationException(Throwable throwable) {
+    public IncomparableException(Throwable throwable) {
         super(throwable);
     }
 
-    public TooMuchIterationException(String s, Throwable throwable, boolean b, boolean b1) {
+    public IncomparableException(String s, Throwable throwable, boolean b, boolean b1) {
         super(s, throwable, b, b1);
     }
 }

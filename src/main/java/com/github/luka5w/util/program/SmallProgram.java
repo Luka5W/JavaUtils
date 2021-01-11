@@ -13,23 +13,22 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
- * A class to initiate programs.
+ * A class to initiate simple programs.
  *
  * GitHub: https://github.com/luka5w/javautils
  *
  * @author Lukas // https://github.com/luka5w
  * @version 1.0.0
  */
-public class Program {
+public class SmallProgram {
 
     public static final DefaultOption[] DEFAULT_OPTIONS = {
             DefaultOption.HELP,
             DefaultOption.VERSION,
-            DefaultOption.CONFIG,
             DefaultOption.SETUP
     };
 
-    private final MainClass mainClass;
+    private final SmallMainClass mainClass;
     private final String[] args;
     private final Options options;
     private final String programName;
@@ -38,7 +37,6 @@ public class Program {
     private final String helpFooter;
     private final boolean helpAutoUsage;
 
-    private File configFile;
     private CommandLine cmd = null;
     private boolean initialized = false;
 
@@ -46,7 +44,6 @@ public class Program {
      *
      * @param mainClass The main class (the actual program).
      * @param args The args passed by the CLI.
-     * @param defaultConfigFile The default config file.
      * @param programName The program name (should be defined in META-INF/MANIFEST.MF).
      * @param programVersion The program version (should be defined in META-INF/MANIFEST.MF).
      * @param helpHeader The header for help output (should be defined in META-INF/MANIFEST.MF).
@@ -54,11 +51,10 @@ public class Program {
      *
      * @since 1.0.0
      */
-    public Program(MainClass mainClass, String[] args, File defaultConfigFile, String programName, String programVersion, String helpHeader, String helpFooter) {
+    public SmallProgram(SmallMainClass mainClass, String[] args, String programName, String programVersion, String helpHeader, String helpFooter) {
         this.mainClass = mainClass;
         this.args = args;
         this.options = this.createOptions(DEFAULT_OPTIONS);
-        this.configFile = defaultConfigFile;
         this.programName = programName;
         this.programVersion = programVersion;
         this.helpHeader = helpHeader;
@@ -71,7 +67,6 @@ public class Program {
      * @param mainClass The main class (the actual program).
      * @param args The args passed by the CLI.
      * @param defaultOptions The enabled default options. See {@link DefaultOption}.
-     * @param defaultConfigFile The default config file.
      * @param programName The program name (should be defined in META-INF/MANIFEST.MF).
      * @param programVersion The program version (should be defined in META-INF/MANIFEST.MF).
      * @param helpHeader The header for help output (should be defined in META-INF/MANIFEST.MF).
@@ -80,11 +75,10 @@ public class Program {
      *
      * @since 1.0.0
      */
-    public Program(MainClass mainClass, String[] args, DefaultOption[] defaultOptions, File defaultConfigFile, String programName, String programVersion, String helpHeader, String helpFooter, boolean helpAutoUsage) {
+    public SmallProgram(SmallMainClass mainClass, String[] args, DefaultOption[] defaultOptions, String programName, String programVersion, String helpHeader, String helpFooter, boolean helpAutoUsage) {
         this.mainClass = mainClass;
         this.args = args;
         this.options = this.createOptions(defaultOptions);
-        this.configFile = defaultConfigFile;
         this.programName = programName;
         this.programVersion = programVersion;
         this.helpHeader = helpHeader;
@@ -109,24 +103,10 @@ public class Program {
             CLIUtils.logAndExit(e.getMessage(), 1);
         } /// exit 1
 
-        // Determine, which config file to use (from arguments or default one)
-        this.setConfigFile();
-
         // Process commands (not the main program)
         if (this.cmd.hasOption("v")) CLIUtils.logAndExit(this.programVersion, 0); /// exit 0
         if (this.cmd.hasOption("h")) printHelp(); /// exit 0
         if (this.cmd.hasOption("setup")) setup(); // exit -1, 0, 1
-
-        // Check config file
-        try {
-            if (!this.configFile.isFile())
-                throw new FileNotFoundException("can't read config file: file not found");
-            if (!configFile.canRead())
-                throw new NoPermissionException("can't read config file: insufficient permission");
-        } /// ensures configFile != null || exception
-        catch (FileNotFoundException | NoPermissionException e) {
-            CLIUtils.logAndExit(e.getMessage() + "\nif the config file does not exist, please create one using --setup\nif it exist, make sure you have read permissions", 1);
-        } /// exit 1
 
         // Mark as initiated
         this.initialized = true;
@@ -139,7 +119,7 @@ public class Program {
      */
     /*@ requires initialized == true @*/ public void exec() {
         if (!this.initialized) CLIUtils.logAndExit("can't execute program: ", new PreconditionNotMetException("not initialized")); /// exit -1
-        this.mainClass.main(this.cmd, this.configFile);
+        this.mainClass.main(this.cmd);
     }
 
     /**
@@ -169,15 +149,6 @@ public class Program {
     private void parseArguments() throws ParseException {
         CommandLineParser parser = new DefaultParser();
         this.cmd = parser.parse(this.options, this.args);
-    }
-
-    /**
-     * Checks if the use-config option is passed and replaces the default config file with the passed one.
-     *
-     * @since 1.0.0
-     */
-    private void setConfigFile() {
-        this.configFile = (this.cmd.hasOption("c") ? new File(this.cmd.getOptionValue("c")) : this.configFile);
     }
 
     /**
@@ -217,35 +188,12 @@ public class Program {
      * @since 1.0.0
      */
     private void setup() {
-        // Ask if config file can be overwritten if it exists
-        if (this.configFile.isFile()) {
-            if (Prompt.promptYN("config file will be overwritten. continue?")) {
-                // Erase content of config file
-                try {
-                    FileUtils.erase(this.configFile);
-                }
-                catch (IOException e) {
-                    CLIUtils.logAndExit("can't recreate config file: ", e);
-                } /// exit -1
-            }
-            else {
-                CLIUtils.logAndExit("setup aborted", 0); /// exit 0
-            } /// exit 0
-        }
-        else {
-            try {
-                this.configFile.createNewFile();
-            }
-            catch (IOException e) {
-                CLIUtils.logAndExit("can't create config file: ", e);
-            } /// exit -1
-        }
         try {
-            this.mainClass.setup(this.cmd, this.configFile);
+            this.mainClass.setup(this.cmd);
             CLIUtils.logAndExit("setup completed", 0);
         }
         catch (Throwable e) {
             CLIUtils.logAndExit("setup aborted: ", e);
         }
-    }/// exit -1, 0, 1
+    }/// exit -1, 0
 }

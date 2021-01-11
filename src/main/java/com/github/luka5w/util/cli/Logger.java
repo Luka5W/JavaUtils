@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
  *
  * <p>A logging utility</p>
  *
- * GitHub: https://github.com/luka5w/jutils
+ * GitHub: https://github.com/luka5w/javautils
  *
  * @author Lukas // https://github.com/luka5w
  * @version 1.0.0

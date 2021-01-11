@@ -13,7 +13,7 @@ import java.util.Base64;
  *
  * <p>A class store and interact with a hashed password</p>
  *
- * GitHub: https://github.com/luka5w/encryption
+ * GitHub: https://github.com/luka5w/javautils
  *
  * @author Lukas // https://github.com/luka5w
  * @version 1.0.0

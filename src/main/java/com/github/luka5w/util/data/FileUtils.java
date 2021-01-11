@@ -7,7 +7,7 @@ import java.io.*;
  *
  * <p>A class to handle file accesses.</p>
  *
- * GitHub: https://github.com/luka5w/jutils
+ * GitHub: https://github.com/luka5w/javautils
  *
  * @author Lukas // https://github.com/luka5w
  * @version 1.0.0
