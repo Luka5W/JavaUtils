@@ -8,7 +8,7 @@ package com.github.luka5w.util.versioning;
  * GitHub: https://github.com/luka5w/javautils
  *
  * @author Lukas // https://github.com/luka5w
- * @version 1.0.0
+ * @version 1.1.0
  */
 public enum VersionType {
     ALPHA("a"),

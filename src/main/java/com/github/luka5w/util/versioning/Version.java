@@ -10,7 +10,7 @@ import com.github.luka5w.util.exception.IncomparableException;
  * GitHub: https://github.com/luka5w/javautils
  *
  * @author Lukas // https://github.com/luka5w
- * @version 1.0.0
+ * @version 1.2.0
  */
 public class Version {
 
@@ -66,7 +66,7 @@ public class Version {
     }
 
     /**
-     * Creates a new version from a String matching &lt;type&gt;&lt;major&gt;[.&lt;minor&gt;[.&lt;patch&gt;[.&lt;revision&gt;]]].
+     * Creates a new version from a String matching [&lt;type&gt;]&lt;major&gt;[.&lt;minor&gt;[.&lt;patch&gt;[.&lt;revision&gt;]]].
      *
      * @param version The String to get the version from.
      * @return The new version.
@@ -197,7 +197,7 @@ public class Version {
     }
 
     /**
-     * Formats this version as a String with pattern &lt;type&gt;&lt;major&gt;[.&lt;minor&gt;[.&lt;patch&gt;[.&lt;revision&gt;]]].
+     * Formats this version as a String with pattern [&lt;type&gt;]&lt;major&gt;[.&lt;minor&gt;[.&lt;patch&gt;[.&lt;revision&gt;]]].
      *
      * @return The version formatted as String.
      *
