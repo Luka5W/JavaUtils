@@ -4,6 +4,7 @@ import com.github.luka5w.util.exception.TooMuchIterationException;
 import org.jetbrains.annotations.Nullable;
 import jdk.jfr.Experimental;
 
+import java.io.Console;
 import java.util.Scanner;
 
 /**
@@ -95,7 +96,18 @@ public class Prompt {
      * @since 1.0.0
      */
     public static String prompt(String prefix) {
-        System.out.print(prefix);
-        return new Scanner(System.in).nextLine();
+        return System.console().readLine(prefix);
+    }
+
+    /**
+     * Prompts a password from the user.
+     *
+     * @param prefix The prefix before the 'cursor'.
+     * @return The line, the user submitted.
+     *
+     * @since 1.0.0
+     */
+    public static String promptPassword(String prefix) {
+        return new String(System.console().readPassword(prefix));
     }
 }
