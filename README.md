@@ -14,7 +14,7 @@ https://luka5w.github.io/JavaUtils/javadoc
   - **CLIUtils**
     - Logging a message or throwable and exiting the program with a specific status code.
   - **Logger**: A class for logging (to CLI only) with child process/ child logger support.
-  - **Prompt**: Prompting the user (query Y/N or prompt anything).
+  - **Prompt**: Prompting the user (query Y/N or prompt a password or text).
 - **Data**
   - **FileUtils**
     - Creating a file and all parent directories.
