@@ -2,7 +2,7 @@
 
 ## Releases
 
-[latest release](/releases/latest)
+[latest release](https://github.com/Luka5W/JavaUtils/releases/latest)
 
 ## JavaDoc
 
